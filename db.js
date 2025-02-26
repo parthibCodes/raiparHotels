@@ -2,7 +2,8 @@ const mongoose = require('mongoose');
 
 //Define MongoDB connection URL
 
-const mongoURL = 'mongodb://localhost:27017/raiparHotels'
+// const mongoURL = 'mongodb://localhost:27017/raiparHotels';
+const mongoURL = process.env.DB_URL;
 mongoose.connect(mongoURL,{
     useNewUrlParser: true,
     useUnifiedTopology: true,
