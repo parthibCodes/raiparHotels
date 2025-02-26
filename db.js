@@ -14,9 +14,11 @@ if (!mongoURL) {
 
 // Connect to MongoDB
 mongoose.connect(mongoURL, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-});
+    useNewUrlParser: true,  // Ensures the connection URL is parsed correctly
+    useUnifiedTopology: true,  // Ensures the latest connection behavior
+    retryWrites: true,  // Ensure retry writes are enabled (recommended for Atlas)
+    w: 'majority',  // Ensures write majority is used (recommended for Atlas)
+  })
 
 // Get a default connection
 const db = mongoose.connection;
