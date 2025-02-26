@@ -1,31 +1,39 @@
 const mongoose = require('mongoose');
 
-//Define MongoDB connection URL
+// Use dotenv to load environment variables if you're using an .env file
+require('dotenv').config();
 
-// const mongoURL = 'mongodb://localhost:27017/raiparHotels';
+// MongoDB connection URL from environment variable
 const mongoURL = process.env.DB_URL;
-mongoose.connect(mongoURL,{
+
+// Check if mongoURL is available
+if (!mongoURL) {
+    console.error('MongoDB URI is not defined in environment variables.');
+    process.exit(1);  // Exit the process if the DB_URL is not set
+}
+
+// Connect to MongoDB
+mongoose.connect(mongoURL, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
-})
+});
 
-//Get a default connection
-//Mongoose maintains a default connection object representing object representing the MongoDB connection
-
+// Get a default connection
 const db = mongoose.connection;
 
-db.on('connected',()=>{
-    console.log('Connected to mongodb server');
+// Connection events
+db.on('connected', () => {
+    console.log('Connected to MongoDB server');
 });
 
-db.on('error',(err)=>{
-    console.log('MongoDB connection error' + err);
+db.on('error', (err) => {
+    console.log('MongoDB connection error:', err);
+    process.exit(1);  // Exit the process if there's a connection error
 });
 
-db.on('disconnected',()=>{
+db.on('disconnected', () => {
     console.log('MongoDB disconnected');
 });
 
-//Export database connection
-
+// Export the database connection
 module.exports = db;
