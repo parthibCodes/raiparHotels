@@ -4,7 +4,8 @@ const mongoose = require('mongoose');
 require('dotenv').config();
 
 // MongoDB connection URL from environment variable
-const mongoURL = process.env.DB_URL;
+// const mongoURL = process.env.DB_URL;
+const mongoURL = process.env.DB_URL_LOCAL;
 
 // Check if mongoURL is available
 if (!mongoURL) {
